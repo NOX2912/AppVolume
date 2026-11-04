@@ -73,7 +73,7 @@ final class ProcessTap {
         description.name = "AppVolume – \(name)"
         description.isPrivate = true
         description.muteBehavior = .mutedWhenTapped
-        try check(AudioHardwareCreateProcessTap(description, &tapID), "Erzeugen des Process Taps")
+        try check(AudioHardwareCreateProcessTap(description, &tapID), "Creating process tap")
     }
 
     private func createAggregate(name: String) throws {
@@ -95,7 +95,7 @@ final class ProcessTap {
             ],
         ]
         try check(AudioHardwareCreateAggregateDevice(description as CFDictionary, &aggregateID),
-                  "Erzeugen des Aggregate-Device")
+                  "Creating aggregate device")
     }
 
     private func start(inputStreamsToSkip: Int) throws {
@@ -104,8 +104,8 @@ final class ProcessTap {
         try check(AudioDeviceCreateIOProcIDWithBlock(&ioProcID, aggregateID, nil) { _, inInput, _, outOutput, _ in
             ProcessTap.render(input: inInput, output: outOutput, skipInputBuffers: inputStreamsToSkip,
                               target: target, current: current)
-        }, "Anlegen der IOProc")
-        try check(AudioDeviceStart(aggregateID, ioProcID), "Starten des Aggregate-Device")
+        }, "Creating IOProc")
+        try check(AudioDeviceStart(aggregateID, ioProcID), "Starting aggregate device")
     }
 
     // MARK: Echtzeit-Verarbeitung (keine Allokationen, keine Locks)

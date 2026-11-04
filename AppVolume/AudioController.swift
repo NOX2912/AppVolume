@@ -144,7 +144,7 @@ final class AudioController {
         let device = CA.defaultOutputDevice()
         outputDevice = device
         outputUID = device.flatMap(CA.deviceUID)
-        let name = device.flatMap(CA.name) ?? "Kein Ausgabegerät"
+        let name = device.flatMap(CA.name) ?? String(localized: "No output device")
         if name != outputDeviceName { outputDeviceName = name }
     }
 
@@ -183,9 +183,9 @@ final class AudioController {
             do {
                 taps[key] = try ProcessTap(processObjects: group.processObjects, outputDevice: outputDevice,
                                            outputUID: outputUID, name: group.identity.name, gain: gain)
-                log.info("Tap für \(group.identity.name, privacy: .public) erstellt")
+                log.info("Created tap for \(group.identity.name, privacy: .public)")
             } catch {
-                log.error("Tap für \(group.identity.name, privacy: .public): \(String(describing: error), privacy: .public)")
+                log.error("Tap for \(group.identity.name, privacy: .public): \(String(describing: error), privacy: .public)")
                 errors.append("\(group.identity.name): \(error)")
             }
         }

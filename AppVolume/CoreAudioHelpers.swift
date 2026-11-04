@@ -4,7 +4,7 @@ import Foundation
 struct CoreAudioError: Error, CustomStringConvertible {
     let status: OSStatus
     let context: String
-    var description: String { "\(context) fehlgeschlagen (OSStatus \(status))" }
+    var description: String { "\(context) failed (OSStatus \(status))" }
 }
 
 func check(_ status: OSStatus, _ context: @autoclosure () -> String) throws {
@@ -23,7 +23,7 @@ enum CA {
         var addr = address(selector, scope: scope)
         var size = UInt32(MemoryLayout<T>.size)
         var result = value
-        try check(AudioObjectGetPropertyData(object, &addr, 0, nil, &size, &result), "Lesen von \(selector)")
+        try check(AudioObjectGetPropertyData(object, &addr, 0, nil, &size, &result), "Reading \(selector)")
         return result
     }
 
@@ -31,11 +31,11 @@ enum CA {
                             scope: AudioObjectPropertyScope = kAudioObjectPropertyScopeGlobal, element: T) throws -> [T] {
         var addr = address(selector, scope: scope)
         var size: UInt32 = 0
-        try check(AudioObjectGetPropertyDataSize(object, &addr, 0, nil, &size), "Größe von \(selector)")
+        try check(AudioObjectGetPropertyDataSize(object, &addr, 0, nil, &size), "Size of \(selector)")
         let count = Int(size) / MemoryLayout<T>.stride
         guard count > 0 else { return [] }
         var array = [T](repeating: element, count: count)
-        try check(AudioObjectGetPropertyData(object, &addr, 0, nil, &size, &array), "Lesen von \(selector)")
+        try check(AudioObjectGetPropertyData(object, &addr, 0, nil, &size, &array), "Reading \(selector)")
         return Array(array.prefix(Int(size) / MemoryLayout<T>.stride))
     }
 
@@ -43,7 +43,7 @@ enum CA {
         var addr = address(selector)
         var size = UInt32(MemoryLayout<Unmanaged<CFString>?>.size)
         var value: Unmanaged<CFString>?
-        try check(AudioObjectGetPropertyData(object, &addr, 0, nil, &size, &value), "Lesen von \(selector)")
+        try check(AudioObjectGetPropertyData(object, &addr, 0, nil, &size, &value), "Reading \(selector)")
         return (value?.takeRetainedValue() as String?) ?? ""
     }
 

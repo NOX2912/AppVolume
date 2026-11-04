@@ -1,0 +1,16 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "NSAudioCaptureUsageDescription": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AppVolume fängt das Audio einzelner Apps ab, um deren Lautstärke getrennt zu regeln."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

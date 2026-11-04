@@ -60,7 +60,7 @@ enum AppResolver {
             return identity
         }
         return AppIdentity(key: app.bundleIdentifier ?? "pid:\(app.processIdentifier)",
-                           name: app.localizedName ?? "Unbekannt",
+                           name: app.localizedName ?? String(localized: "Unknown"),
                            icon: app.icon ?? NSWorkspace.shared.icon(for: .application))
     }
 

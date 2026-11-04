@@ -7,7 +7,7 @@ struct ContentView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
-                Text("App-Lautstärken").font(.headline)
+                Text("App Volumes").font(.headline)
                 Spacer()
                 Label(controller.outputDeviceName, systemImage: "hifispeaker")
                     .font(.caption)
@@ -27,7 +27,7 @@ struct ContentView: View {
             if controller.apps.isEmpty {
                 VStack(spacing: 6) {
                     Image(systemName: "speaker.zzz").font(.title2).foregroundStyle(.secondary)
-                    Text("Keine App gibt gerade Audio aus.").foregroundStyle(.secondary)
+                    Text("No app is playing audio.").foregroundStyle(.secondary)
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 28)
@@ -57,13 +57,13 @@ struct ContentView: View {
 
             VStack(alignment: .leading, spacing: 6) {
                 HStack {
-                    Toggle("Bei Anmeldung starten", isOn: Binding(
+                    Toggle("Launch at Login", isOn: Binding(
                         get: { loginItem.isEnabled },
                         set: { loginItem.set($0) }
                     ))
                     .toggleStyle(.checkbox)
                     Spacer()
-                    Button("Beenden") { NSApp.terminate(nil) }
+                    Button("Quit") { NSApp.terminate(nil) }
                         .keyboardShortcut("q")
                 }
                 if let error = loginItem.error {
@@ -98,7 +98,7 @@ private struct AppRow: View {
                             .foregroundStyle(app.muted ? .red : .primary)
                     }
                     .buttonStyle(.borderless)
-                    .help(app.muted ? "Stummschaltung aufheben" : "Stumm schalten")
+                    .help(app.muted ? Text("Unmute") : Text("Mute"))
 
                     Slider(value: Binding(
                         get: { app.volume },
@@ -107,7 +107,7 @@ private struct AppRow: View {
                     .controlSize(.small)
                     .disabled(app.muted)
 
-                    Text("\(Int((app.volume * 100).rounded())) %")
+                    Text(verbatim: "\(Int((app.volume * 100).rounded())) %")
                         .font(.caption.monospacedDigit())
                         .foregroundStyle(.secondary)
                         .frame(width: 38, alignment: .trailing)
@@ -133,15 +133,15 @@ private struct PermissionBanner: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Label("Zugriff auf Systemaudio fehlt", systemImage: "exclamationmark.triangle.fill")
+            Label("System audio access required", systemImage: "exclamationmark.triangle.fill")
                 .foregroundStyle(.orange)
                 .font(.subheadline.bold())
-            Text("AppVolume braucht die Berechtigung „Bildschirm- & Systemaudioaufnahme → Nur Systemaudio“, um Lautstärken zu ändern.")
+            Text("AppVolume needs the “Screen & System Audio Recording → System Audio Recording Only” permission to change app volumes.")
                 .font(.caption)
                 .fixedSize(horizontal: false, vertical: true)
             HStack {
-                Button("Systemeinstellungen öffnen") { NSWorkspace.shared.open(AudioPermission.settingsURL) }
-                Button("Erneut prüfen", action: recheck)
+                Button("Open System Settings") { NSWorkspace.shared.open(AudioPermission.settingsURL) }
+                Button("Check Again", action: recheck)
             }
             .controlSize(.small)
         }

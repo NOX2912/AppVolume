@@ -43,7 +43,7 @@ final class LoginItem {
         }
         isEnabled = SMAppService.mainApp.status == .enabled
         if enabled, SMAppService.mainApp.status == .requiresApproval {
-            error = "Bitte in den Systemeinstellungen → Anmeldeobjekte erlauben."
+            error = String(localized: "Please allow AppVolume in System Settings → Login Items.")
             SMAppService.openSystemSettingsLoginItems()
         }
     }

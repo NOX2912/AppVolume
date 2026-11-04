@@ -4,6 +4,8 @@
 
 <p align="center">Per-app volume control in the macOS menu bar.</p>
 
+<p align="center"><img src="docs/demo.gif" width="720" alt="AppVolume demo: turning Chrome down, muting Zoom, switching to AirPods"></p>
+
 - Volume slider and mute button for every app that is playing audio
 - Helper processes (Chrome, Safari, Electron apps) are grouped under their app
 - Keeps working when you switch output devices

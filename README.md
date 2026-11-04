@@ -21,6 +21,19 @@
 - macOS 14.2 or later (uses Core Audio process taps)
 - Xcode 16 or later to build
 
+## Download
+
+Grab `AppVolume-x.y.zip` from the [latest release](https://github.com/NOX2912/AppVolume/releases/latest), unzip it
+and move `AppVolume.app` to `/Applications`.
+
+The download is not notarized by Apple, so macOS blocks it on first launch. To allow it, either run
+
+```bash
+xattr -dr com.apple.quarantine /Applications/AppVolume.app
+```
+
+or try to open the app once, then click **Open Anyway** in *System Settings → Privacy & Security*.
+
 ## Build and run
 
 **In Xcode:** open `AppVolume.xcodeproj`, choose the “AppVolume” scheme and press ⌘R.
